@@ -12,20 +12,15 @@
         ) {}
     }
 
-    class InputAttributes extends HtmlElement {
+    class InputAttributes {
         constructor(
             public value: string,
-            public placeholder: string,
-            id: string,
-        ) {
-            super(id, 'input');
-        }
+            public placeholder: string
+        ) {}
     }
 
-    class InputEvents extends InputAttributes {
-        constructor( value: string, placeholder: string, id: string ) {
-            super( value, placeholder, id );
-        }
+    class InputEvents {
+        constructor() {}
 
         setFocus() {};
         getValue() {};
@@ -33,11 +28,53 @@
         removeValue() {};
     }
 
+    interface InputElementProperties {
+        value: string;
+        placeholder: string;
+        id: string;
+        type: HtmlType;
+    }
+
+    class InputElement {
+        
+        public htmlElement: HtmlElement;
+        public inputAttributes: InputAttributes;
+        public inputEvents: InputEvents;
+        
+        //* Personal Solution (expecting props as a destructured object
+        //* at constructor parameters)
+        constructor({
+            value,
+            placeholder,
+            id,
+            type
+        }: InputElementProperties){
+            this.htmlElement = new HtmlElement( id, type);
+            this.inputAttributes = new InputAttributes(value, placeholder);
+            this.inputEvents = new InputEvents();
+        }
+
+        //* Ideal solution to avoid modifications on the class's constructor
+        // constructor(value: string, placeholder: string, id: string, type: HtmlType) {
+        //     this.htmlElement = new HtmlElement( id, type);
+        //     this.inputAttributes = new InputAttributes(value, placeholder);
+        //     this.inputEvents = new InputEvents();
+        // }
+    }
 
     //? Idea para la nueva clase InputElement
 
-    const nameField = new InputEvents('Fernando', 'Enter first name', 'txtName');
+    //* Personal Solution (passing props as an object at class call arguments)
+    const nameField = new InputElement({
+        value:'Fernando',
+        placeholder:'Enter first name',
+        id:'txtName',
+        type: 'input',
+    });
 
-    console.log({ nameField });
+    //* Ideal solution to avoid modifications on the class's call
+    // const nameField = new InputElement('Fernando', 'Enter first name', 'txtName', 'input' );
+
+    console.log({ nameField, isActive: nameField.inputEvents.isActive() });
 
 })();
