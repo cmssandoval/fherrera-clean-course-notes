@@ -1,54 +1,44 @@
 
-//* Same as interface but with abstract class
-// abstract class Bird {
-
-//     abstract fly(): void;
-//     abstract eat(): void;
-//     abstract run(): void;
-//     abstract swim(): void;
-
-// }
-
 interface Bird {
-    fly(): void;
     eat(): void;
-    run(): void;
+}
+
+interface FlyingBird {
+    fly(): number;
+}
+
+interface SwimmingBird {
     swim(): void;
 }
 
-//* Implementation with abstract class needs
-//* extends reserved word instead of implements.
-//* implements is for interfaces.
-// class Tucan extends Bird {
-class Tucan implements Bird {
+interface RunningBird {
+    run(): void;
+}
 
-    public fly(){}
+class Tucan implements Bird, FlyingBird {
+
+    public fly(){ return 3900; }
     public eat(){}
-    public run(){}
 
 }
 
-// class Hummingbird extends Bird {
-class Hummingbird implements Bird {
+class Hummingbird implements Bird, FlyingBird {
 
-    public fly(){}
+    public fly(){ return 5000; }
     public eat(){}
-    public run(){}
-    
+
 }
 
-// class Ostrich extends Bird {
-class Ostrich implements Bird {
+class Ostrich implements Bird, RunningBird {
     
     public eat(){}
     public run(){}
 
 }
 
-// class Penguin extends Bird {
-class Penguin implements Bird {
+class Penguin implements Bird, SwimmingBird {
 
     public eat(){}
-    public run(){}
     public swim(){}
+    
 }
